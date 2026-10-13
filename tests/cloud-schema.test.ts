@@ -2,6 +2,7 @@ import { afterAll, beforeAll, describe, expect, it } from 'vitest';
 import { PGlite } from '@electric-sql/pglite';
 import { readFileSync } from 'node:fs';
 import { seedTrips } from '../lib/seed';
+import { equalSplit } from '../lib/money';
 import type { Trip } from '../lib/types';
 const OWNER = '98a30000-3120-40a3-84e7-000000000001';
 const VIEWER = '98a30000-3120-40a3-84e7-000000000002';
@@ -64,6 +65,22 @@ describe('PostgreSQL schema and server permissions (Supabase schemas mocked)', (
     tripId = trip.id;
     trip.ownerId = OWNER;
     trip.members[0].userId = OWNER;
+    trip.expenses = [
+      {
+        id: 'a81d2000-2f64-47b1-9c12-000000000301',
+        title: 'هزینه آزمایشی',
+        amount: 12000000,
+        payerId: trip.members[0].id,
+        category: 'hotel',
+        date: trip.startDate,
+        splitMode: 'equal',
+        shares: equalSplit(
+          12000000,
+          trip.members.map((member) => member.id),
+        ),
+        createdAt: new Date().toISOString(),
+      },
+    ];
     await db.query('select * from public.create_trip($1::jsonb)', [JSON.stringify(trip)]);
   }, 30000);
   afterAll(async () => {

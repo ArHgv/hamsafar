@@ -13,6 +13,8 @@ describe('default trip seed', () => {
     expect(trip.startDate).toBe(jalaliToISO(1405, 7, 23));
     expect(trip.endDate).toBe(jalaliToISO(1405, 7, 28));
     expect(trip.members.map((member) => member.name)).toEqual(['آرین', 'عارف', 'ساج', 'دلارام']);
+    expect(trip.expenses).toEqual([]);
+    expect(trip.settlements).toEqual([]);
     expect(trip.transport.mode).toBe('train');
     expect(trip.cover).toBe('/images/mashhad-cover.jpg');
     expect(trip.checklist.length).toBeGreaterThanOrEqual(15);

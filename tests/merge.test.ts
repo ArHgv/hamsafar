@@ -35,7 +35,22 @@ describe('trip validation and collaboration', () => {
   });
   it('rejects foreign participants and inverted dates', () => {
     const t = seedTrips()[0];
-    t.expenses[0].payerId = 'not-a-member';
+    t.expenses = [
+      {
+        id: 'a81d2000-2f64-47b1-9c12-000000000301',
+        title: 'هزینه آزمایشی',
+        amount: 12000000,
+        payerId: 'not-a-member',
+        category: 'hotel',
+        date: t.startDate,
+        splitMode: 'equal',
+        shares: equalSplit(
+          12000000,
+          t.members.map((member) => member.id),
+        ),
+        createdAt: new Date().toISOString(),
+      },
+    ];
     expect(tripSchema.safeParse(t).success).toBe(false);
     const d = seedTrips()[0];
     d.endDate = '2000-01-01';

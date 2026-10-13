@@ -1,7 +1,6 @@
 import type { ChecklistItem, Member, Trip } from './types';
 import { jalaliToISO } from './dates';
 import { MEMBER_COLORS } from './constants';
-import { equalSplit } from './money';
 
 const id = (n: number) => `a81d2000-2f64-47b1-9c12-${String(n).padStart(12, '0')}`;
 
@@ -152,23 +151,7 @@ export function seedTrips(): Trip[] {
         locationId: locations[1].id,
       },
     ],
-    expenses: [
-      {
-        id: id(301),
-        title: 'رزرو هتل مشهد',
-        amount: 12000000,
-        payerId: members[0].id,
-        category: 'hotel',
-        date: startDate,
-        splitMode: 'equal',
-        shares: equalSplit(
-          12000000,
-          members.map((member) => member.id),
-        ),
-        createdAt,
-        notes: 'هزینه اقامت چهار نفر برای سفر پنج‌روزه.',
-      },
-    ],
+    expenses: [],
     settlements: [],
     locations,
     transport: {

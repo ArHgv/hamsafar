@@ -4,7 +4,7 @@ import { parseCache } from '../lib/persistence';
 import { seedTrips } from '../lib/seed';
 import { tripSchema, expenseSchema } from '../lib/schemas';
 import { useTripStore } from '../store/use-trip-store';
-import { haversineKm } from '../lib/money';
+import { equalSplit, haversineKm } from '../lib/money';
 import type { Trip } from '../lib/types';
 const OWNER = 'c43a2000-2f64-47b1-9c12-000000000001';
 const PLANNER = 'c43a2000-2f64-47b1-9c12-000000000002';
@@ -50,7 +50,21 @@ describe('safe navigation and strict backup validation', () => {
     expect(tripSchema.safeParse(other).success).toBe(false);
   });
   it('rejects a forged equal split even if the shares sum correctly', () => {
-    const e = seedTrips()[0].expenses[0];
+    const trip = seedTrips()[0];
+    const e = {
+      id: 'a81d2000-2f64-47b1-9c12-000000000301',
+      title: 'هزینه آزمایشی',
+      amount: 12000000,
+      payerId: trip.members[0].id,
+      category: 'hotel' as const,
+      date: trip.startDate,
+      splitMode: 'equal' as const,
+      shares: equalSplit(
+        12000000,
+        trip.members.map((member) => member.id),
+      ),
+      createdAt: new Date().toISOString(),
+    };
     e.shares[0].amount--;
     e.shares[1].amount++;
     expect(expenseSchema.safeParse(e).success).toBe(false);
@@ -119,6 +133,21 @@ describe('local state, permissions and lossless cloud merges', () => {
   });
   it('locks currency once a financial record exists', () => {
     const t = useTripStore.getState().trips[0];
+    const expense = {
+      id: 'a81d2000-2f64-47b1-9c12-000000000302',
+      title: 'هزینه آزمایشی',
+      amount: 12000000,
+      payerId: t.members[0].id,
+      category: 'hotel' as const,
+      date: t.startDate,
+      splitMode: 'equal' as const,
+      shares: equalSplit(
+        12000000,
+        t.members.map((member) => member.id),
+      ),
+      createdAt: new Date().toISOString(),
+    };
+    useTripStore.getState().updateTrip(t.id, { expenses: [expense] }, ['expenses']);
     expect(() => useTripStore.getState().updateTrip(t.id, { currency: 'USD' }, ['info'])).toThrow(
       'CURRENCY_LOCKED',
     );
