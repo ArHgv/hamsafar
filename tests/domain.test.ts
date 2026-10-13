@@ -114,7 +114,7 @@ describe('local state, permissions and lossless cloud merges', () => {
     expect(() =>
       useTripStore.getState().updateTrip(t.id, { expenses: [] }, ['activities']),
     ).toThrow('FORBIDDEN');
-    useTripStore.getState().toggleChecklist(t.id, t.checklist[0].id);
+    useTripStore.getState().toggleChecklist(t.id, t.checklist[1].id);
     expect(useTripStore.getState().dirtyTripIds).toContain(t.id);
   });
   it('locks currency once a financial record exists', () => {
@@ -141,7 +141,7 @@ describe('local state, permissions and lossless cloud merges', () => {
     useTripStore.getState().mergeRemote(remote, 2);
     const s = useTripStore.getState();
     expect(s.trips.find((trip) => trip.id === t.id)!.title).toBe(remote.title);
-    expect(s.trips.find((trip) => trip.id === t.id)!.checklist[0].done).toBe(false);
+    expect(s.trips.find((trip) => trip.id === t.id)!.checklist[1].done).toBe(false);
     expect(s.revisions[t.id]).toBe(2);
     expect(s.dirtyTripIds).toContain(t.id);
     expect(s.syncErrors[t.id]).toBe('');
@@ -171,7 +171,7 @@ describe('local state, permissions and lossless cloud merges', () => {
     const s = useTripStore.getState();
     expect(s.snapshots).toEqual({});
     expect(s.revisions).toEqual({});
-    expect(s.trips).toHaveLength(2);
+    expect(s.trips).toHaveLength(0);
   });
   it('imports cloud backups as independent editable local copies', () => {
     const t = cloudTrip();

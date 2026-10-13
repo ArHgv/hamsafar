@@ -4,6 +4,7 @@ import { MotionConfig } from 'framer-motion';
 import { useTripStore } from '@/store/use-trip-store';
 import { Toasts } from './ui/toasts';
 import { CloudBridge } from './cloud-bridge';
+import { AuthGuard } from './auth-guard';
 export function Providers({ children }: { children: ReactNode }) {
   const theme = useTripStore((s) => s.theme),
     reduce = useTripStore((s) => s.reduceTransparency);
@@ -52,7 +53,7 @@ export function Providers({ children }: { children: ReactNode }) {
   return (
     <MotionConfig reducedMotion="user">
       <CloudBridge />
-      {children}
+      <AuthGuard>{children}</AuthGuard>
       <Toasts />
     </MotionConfig>
   );

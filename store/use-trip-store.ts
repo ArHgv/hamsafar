@@ -122,7 +122,7 @@ export const useTripStore = create<TripState>()(
   persist(
     (set, get) => ({
       trips: seedTrips(),
-      localProfile: { id: 'local-user', name: 'نیکا' },
+      localProfile: { id: 'local-user', name: 'آرین' },
       cloudUser: null,
       activeTripId: DEMO_TRIP_ID,
       theme: 'dark',

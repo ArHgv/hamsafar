@@ -32,6 +32,7 @@ import { BrandMark } from '../ui/brand';
 import { Avatar, Button, Card, Input, TextLink } from '../ui/primitives';
 import { Dialog } from '../ui/dialog';
 import { DatePicker } from '../ui/date-picker';
+import { isPublicAuthPath } from '@/lib/auth-guard';
 const navigation = [
   { href: '/', label: 'نمای کلی', icon: Home },
   { href: '/trips', label: 'سفرهای من', icon: MapPinned },
@@ -69,11 +70,7 @@ export function AppShell({ children }: { children: ReactNode }) {
     dirty = useTripStore((s) => s.dirtyTripIds);
   const setSearch = useUIStore((s) => s.setSearchOpen),
     profile = cloud || local;
-  const simple =
-    pathname.startsWith('/welcome') ||
-    pathname.startsWith('/login') ||
-    pathname.startsWith('/invite') ||
-    pathname.startsWith('/auth');
+  const simple = isPublicAuthPath(pathname);
   const upcoming = trips
     .filter((t) => !t.archived && tripStatus(t.startDate, t.endDate) !== 'past')
     .sort((a, b) => a.startDate.localeCompare(b.startDate));

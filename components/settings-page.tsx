@@ -416,7 +416,7 @@ export function SettingsPage() {
             <div className="data-danger-actions">
               <Button size="small" variant="ghost" onClick={() => setReset(true)}>
                 <RotateCcw size={14} />
-                بازنشانی داده‌های نمونه
+                بازنشانی سفر شروع مشهد
               </Button>
               <Button
                 size="small"
@@ -508,12 +508,12 @@ export function SettingsPage() {
       <ConfirmDialog
         open={reset}
         onOpenChange={setReset}
-        title="داده‌های نمونه جایگزین شوند؟"
-        description="سفرهای محلی فعلی با سه سفر نمونه جایگزین می‌شوند. سفرهای ابری حفظ می‌شوند."
-        label="بازنشانی نمونه‌ها"
+        title="سفر شروع مشهد جایگزین شود؟"
+        description="سفرهای محلی فعلی با سفر شروع مشهد جایگزین می‌شوند. سفرهای ابری حفظ می‌شوند."
+        label="بازنشانی سفر شروع"
         onConfirm={() => {
           state.resetDemo();
-          toast('سه داستان نمونه آماده‌اند.');
+          toast('سفر شروع مشهد آماده شد.');
         }}
       />
       <ConfirmDialog
