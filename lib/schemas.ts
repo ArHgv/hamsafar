@@ -191,6 +191,7 @@ export const locationSchema = z.object({
   longitude: z.number().min(-180, 'طول جغرافیایی معتبر نیست').max(180),
   address: optionalText,
   notes: optionalText,
+  googleMapsUrl: z.url().optional(),
 });
 export const legSchema = z.object({
   origin: optionalText,

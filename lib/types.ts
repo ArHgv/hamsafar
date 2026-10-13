@@ -114,6 +114,7 @@ export interface SavedLocation {
   longitude: number;
   address?: string;
   notes?: string;
+  googleMapsUrl?: string;
 }
 export interface JourneyLeg {
   origin?: string;

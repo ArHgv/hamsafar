@@ -97,7 +97,8 @@ export function LocationsBoard({ trip }: { trip: Trip }) {
   const directions = selected
     ? origin
       ? `https://www.google.com/maps/dir/?api=1&origin=${origin.latitude},${origin.longitude}&destination=${selected.latitude},${selected.longitude}&travelmode=${travelMode}`
-      : `https://www.google.com/maps/search/?api=1&query=${selected.latitude},${selected.longitude}`
+      : selected.googleMapsUrl ||
+        `https://www.google.com/maps/search/?api=1&query=${selected.latitude},${selected.longitude}`
     : '';
   const locate = () => {
     if (!navigator.geolocation) {
@@ -308,15 +309,27 @@ export function LocationsBoard({ trip }: { trip: Trip }) {
                   />
                 )}
                 {l.address && <p>{l.address}</p>}
-                <a
-                  className="location-quick-link"
-                  target="_blank"
-                  rel="noopener noreferrer"
-                  href={`https://www.google.com/maps/search/?api=1&query=${l.latitude},${l.longitude}`}
-                >
-                  باز کردن نشانی
-                  <ArrowUpLeft size={12} />
-                </a>
+                <div className="location-quick-links">
+                  <a
+                    className="location-quick-link"
+                    target="_blank"
+                    rel="noopener noreferrer"
+                    href={`https://www.google.com/maps/dir/?api=1&destination=${l.latitude},${l.longitude}`}
+                  >
+                    <Navigation size={12} />
+                    مسیریابی در گوگل‌مپ
+                    <ArrowUpLeft size={12} />
+                  </a>
+                  <a
+                    className="location-quick-link"
+                    target="_blank"
+                    rel="noopener noreferrer"
+                    href={`https://neshan.org/maps/@${l.latitude},${l.longitude},16z`}
+                  >
+                    باز کردن در نشان
+                    <ArrowUpLeft size={12} />
+                  </a>
+                </div>
               </Card>
             );
           })}

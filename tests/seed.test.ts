@@ -17,6 +17,25 @@ describe('default trip seed', () => {
     expect(trip.settlements).toEqual([]);
     expect(trip.transport.mode).toBe('train');
     expect(trip.cover).toBe('/images/mashhad-cover.jpg');
+    expect(trip.locations).toHaveLength(11);
+    expect(trip.locations.map((location) => location.name)).toEqual([
+      'هتل مرآت',
+      'حرم امام رضا',
+      'بازار رضا',
+      'پارک کوهسنگی',
+      'پارک ملت',
+      'مجتمع کوهسر',
+      'سرزمین موج‌های آبی',
+      'سرزمین موج‌های خروشان',
+      'پایانه الغدیر یزد',
+      'پایانه امام علی بافق یزد',
+      'ایستگاه قطار بافق',
+    ]);
+    expect(
+      trip.locations.every((location) =>
+        location.googleMapsUrl?.startsWith('https://maps.google.com/?q='),
+      ),
+    ).toBe(true);
     expect(trip.checklist.length).toBeGreaterThanOrEqual(15);
     expect(trip.checklist.some((item) => item.name.includes('هتل'))).toBe(true);
     expect(tripSchema.safeParse(trip).success).toBe(true);

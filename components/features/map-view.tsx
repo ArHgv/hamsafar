@@ -4,7 +4,6 @@ import type * as Leaflet from 'leaflet';
 import { LoaderCircle, WifiOff } from 'lucide-react';
 import 'leaflet/dist/leaflet.css';
 import type { SavedLocation } from '@/lib/types';
-import { useTripStore } from '@/store/use-trip-store';
 export function MapView({
   locations,
   selectedId,
@@ -24,8 +23,7 @@ export function MapView({
     tiles = useRef<Leaflet.TileLayer | null>(null),
     [ready, setReady] = useState(false),
     [unavailable, setUnavailable] = useState(false);
-  const theme = useTripStore((s) => s.theme),
-    callbacks = useRef({ onSelect, onPick, picking });
+  const callbacks = useRef({ onSelect, onPick, picking });
   callbacks.current = { onSelect, onPick, picking };
   useEffect(() => {
     let cancelled = false;
@@ -44,15 +42,11 @@ export function MapView({
         L.control
           .zoom({ position: 'bottomleft', zoomInTitle: 'بزرگ‌نمایی', zoomOutTitle: 'کوچک‌نمایی' })
           .addTo(instance);
-        const dark = !document.documentElement.classList.contains('light');
-        tiles.current = L.tileLayer(
-          `https://{s}.basemaps.cartocdn.com/${dark ? 'dark_nolabels' : 'light_nolabels'}/{z}/{x}/{y}{r}.png`,
-          {
-            attribution:
-              '© <a href="https://www.openstreetmap.org/copyright" target="_blank" rel="noopener noreferrer">OpenStreetMap</a> · <a href="https://carto.com/attributions" target="_blank" rel="noopener noreferrer">CARTO</a>',
-            maxZoom: 19,
-          },
-        ).addTo(instance);
+        tiles.current = L.tileLayer('https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png', {
+          attribution:
+            '© <a href="https://www.openstreetmap.org/copyright" target="_blank" rel="noopener noreferrer">OpenStreetMap contributors</a>',
+          maxZoom: 19,
+        }).addTo(instance);
         instance.attributionControl.setPrefix(false);
         let errors = 0;
         tiles.current.on('tileerror', () => {
@@ -133,14 +127,6 @@ export function MapView({
       { animate: !matchMedia('(prefers-reduced-motion: reduce)').matches },
     );
   }, [selectedId, ready]);
-  useEffect(() => {
-    if (tiles.current) {
-      const dark = !document.documentElement.classList.contains('light');
-      tiles.current.setUrl(
-        `https://{s}.basemaps.cartocdn.com/${dark ? 'dark_nolabels' : 'light_nolabels'}/{z}/{x}/{y}{r}.png`,
-      );
-    }
-  }, [theme, ready]);
   return (
     <>
       <div
@@ -158,7 +144,8 @@ export function MapView({
       {unavailable && (
         <div className="map-unavailable" role="status">
           <WifiOff size={14} />
-          تصویر آنلاین نقشه در دسترس نیست؛ نشانی‌ها و نشان‌ها محفوظ‌اند.
+          بارگیری نقشه پایه آنلاین ممکن نیست؛ اتصال اینترنت را بررسی کنید. نشانی‌ها و نشان‌ها
+          محفوظ‌اند.
         </div>
       )}
     </>
