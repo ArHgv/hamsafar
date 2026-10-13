@@ -1,0 +1,23 @@
+{
+  "id": "/",
+  "name": "هم‌سفر — کمی دورتر از روزمرگی",
+  "short_name": "هم‌سفر",
+  "description": "برنامه‌ریزی سفر، هزینه‌ها و هم‌سفرها در یک جای آرام",
+  "start_url": "/",
+  "scope": "/",
+  "display": "standalone",
+  "orientation": "any",
+  "lang": "fa",
+  "dir": "rtl",
+  "background_color": "#101210",
+  "theme_color": "#101210",
+  "icons": [
+    { "src": "/icons/icon-192.png", "sizes": "192x192", "type": "image/png", "purpose": "any" },
+    {
+      "src": "/icons/icon-512.png",
+      "sizes": "512x512",
+      "type": "image/png",
+      "purpose": "any maskable"
+    }
+  ]
+}

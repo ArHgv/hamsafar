@@ -1,0 +1,64 @@
+<!doctype html>
+<html lang="fa" dir="rtl">
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width,initial-scale=1" />
+    <meta name="theme-color" content="#101210" />
+    <title>هم‌سفر | آفلاین</title>
+    <style>
+      @font-face {
+        font-family: Vazirmatn;
+        src: url(/fonts/vazirmatn-arabic.woff2) format('woff2');
+        font-weight: 100 900;
+        font-display: swap;
+      }
+      body {
+        margin: 0;
+        min-height: 100vh;
+        display: grid;
+        place-items: center;
+        background: #101210;
+        color: #f0f1e9;
+        font:
+          16px Vazirmatn,
+          -apple-system,
+          BlinkMacSystemFont,
+          system-ui;
+        text-align: center;
+        padding: 24px;
+        box-sizing: border-box;
+      }
+      main {
+        max-width: 420px;
+      }
+      h1 {
+        font-size: 26px;
+        color: #d4e3b2;
+      }
+      p {
+        color: #a4aa9d;
+        line-height: 2;
+      }
+      button {
+        padding: 13px 25px;
+        background: #d4e3b2;
+        border: 0;
+        border-radius: 13px;
+        color: #273320;
+        font: inherit;
+        margin-top: 15px;
+        cursor: pointer;
+      }
+    </style>
+  </head>
+  <body>
+    <main>
+      <h1>یک مکث کوتاه در مسیر.</h1>
+      <p>
+        فعلاً اتصال اینترنت برقرار نیست. سفرها و تغییرات ذخیره‌شده روی این دستگاه محفوظ‌اند. وقتی
+        آنلاین شدی، دوباره برگرد.
+      </p>
+      <button onclick="location.reload()">تلاش دوباره</button>
+    </main>
+  </body>
+</html>
